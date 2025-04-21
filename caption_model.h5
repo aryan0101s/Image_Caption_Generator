@@ -1,0 +1,19 @@
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import LSTM, Embedding, Dense, Dropout
+from tensorflow.keras.optimizers import Adam
+
+# Model Creation (Example structure, customize it as per your training)
+def create_captioning_model(vocab_size, max_length):
+    model = Sequential()
+    model.add(Embedding(vocab_size, 256, input_length=max_length))
+    model.add(LSTM(256, return_sequences=True))
+    model.add(LSTM(256))
+    model.add(Dense(vocab_size, activation='softmax'))
+    model.compile(loss='categorical_crossentropy', optimizer=Adam())
+    return model
+
+# Assuming the model is already trained
+model = create_captioning_model(vocab_size=5000, max_length=30)
+
+# Save the trained model
+model.save('caption_model.h5')  # Save the model as caption_model.h5

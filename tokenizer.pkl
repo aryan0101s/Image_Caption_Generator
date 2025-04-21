@@ -1,0 +1,11 @@
+import pickle
+from tensorflow.keras.preprocessing.text import Tokenizer
+
+# Example of tokenizer creation
+captions = ["a dog is running", "a cat is sitting", "a person is walking"]
+tokenizer = Tokenizer()
+tokenizer.fit_on_texts(captions)
+
+# Save the tokenizer as a pickle file
+with open('tokenizer.pkl', 'wb') as f:
+    pickle.dump(tokenizer, f)

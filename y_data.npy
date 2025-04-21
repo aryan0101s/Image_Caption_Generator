@@ -1,0 +1,24 @@
+import pickle
+import numpy as np
+from tensorflow.keras.preprocessing.text import Tokenizer
+
+# Load the tokenizer (assuming it's already trained)
+with open('tokenizer.pkl', 'rb') as f:
+    tokenizer = pickle.load(f)
+
+# Example Captions (List of captions corresponding to images)
+captions = [
+    "a dog is running",
+    "a cat is sitting",
+    "a person is walking"
+]
+
+# Convert captions to integer sequences using tokenizer
+sequences = tokenizer.texts_to_sequences(captions)
+
+# Pad sequences (if necessary, set max_length based on your model)
+max_length = 10
+sequences = pad_sequences(sequences, maxlen=max_length)
+
+# Save the encoded captions as y_data.npy
+np.save('y_data.npy', np.array(sequences))

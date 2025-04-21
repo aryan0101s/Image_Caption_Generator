@@ -1,0 +1,30 @@
+import torch
+import numpy as np
+from torchvision import models, transforms
+from PIL import Image
+
+# Load a pre-trained model (ResNet example)
+resnet = models.resnet50(pretrained=True)
+resnet.eval()  # Set to evaluation mode
+
+# Image Preprocessing
+transform = transforms.Compose([
+    transforms.Resize((224, 224)),
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+])
+
+# Function to extract image features
+def extract_features(image_path):
+    image = Image.open(image_path)
+    image = transform(image).unsqueeze(0)  # Add batch dimension
+    with torch.no_grad():
+        features = resnet(image)  # Get features from the pre-trained model
+    return features.squeeze().numpy()  # Convert to numpy array
+
+# Example: Extract features for multiple images
+image_paths = ["image1.jpg", "image2.jpg", "image3.jpg"]
+features = [extract_features(image_path) for image_path in image_paths]
+
+# Save extracted features as X_data.npy
+np.save('X_data.npy', np.array(features))
