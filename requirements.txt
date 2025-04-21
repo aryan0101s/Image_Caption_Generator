@@ -1,6 +1,8 @@
+streamlit
 torch
 tensorflow
+numpy
+Pillow
 opencv-python
-pillow
 matplotlib
-streamlit
+scikit-learn
